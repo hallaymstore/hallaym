@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Qidiruv | Hallaym</title>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script>try{const theme=localStorage.getItem('hallaym:theme');if(theme){document.documentElement.dataset.theme=theme;}}catch(e){}</script>
+  </head>
+  <body>
+    <div data-dynamic-header></div>
+    <main class="site-shell main-flow">
+      <section class="card">
+        <span class="kicker">Yangilik izlash</span>
+        <h1>Yangiliklar qidiruvi</h1>
+        <p>Sarlavha, qisqa tavsif va matn bo‘yicha qulay qidiruv.</p>
+        <form id="search-form" class="form-grid" style="margin-top:18px">
+          <div class="full">
+            <label for="query">So'rov</label>
+            <input id="query" name="query" type="search" placeholder="Masalan: biznes, sport, jamiyat..." />
+          </div>
+          <div>
+            <label for="category">Kategoriya</label>
+            <select id="category" name="category">
+              <option value="">Barchasi</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:end">
+            <button class="btn btn-primary" type="submit">Qidirish</button>
+          </div>
+        </form>
+      </section>
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Natijalar</h2>
+            <p class="muted" id="search-meta">So'rov kiriting va natijalarni ko'ring.</p>
+          </div>
+        </div>
+        <div id="results" class="news-grid"></div>
+      </section>
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Saqlangan materiallar</h2>
+            <p class="muted">O‘quvchi saqlab qo‘ygan postlar shu brauzerda ko‘rinadi.</p>
+          </div>
+        </div>
+        <div id="saved-list" class="resource-grid"></div>
+      </section>
+    </main>
+    <div data-dynamic-footer></div>
+    <script src="/assets/site.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async function () {
+        const form = document.getElementById('search-form');
+        const results = document.getElementById('results');
+        const meta = document.getElementById('search-meta');
+        const category = document.getElementById('category');
+        const savedList = document.getElementById('saved-list');
+
+        function escapeHtml(value) {
+          return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        }
+
+        function renderSaved() {
+          const saved = JSON.parse(localStorage.getItem('hallaym:saved') || '[]');
+          savedList.innerHTML = saved.length
+            ? saved.map((item) => '<a class="resource-card" href="' + escapeHtml(item.url || ('/news/' + item.slug)) + '"><span>' + escapeHtml(item.title || 'Saqlangan material') + '</span><small>Keyinroq o‘qish uchun</small></a>').join('')
+            : '<div class="empty card">Hali saqlangan material yo‘q.</div>';
+        }
+
+        try {
+          const config = await window.Hallaym.request('/api/config');
+          config.categories.forEach((item) => {
+            const option = document.createElement('option');
+            option.value = item.slug;
+            option.textContent = item.label;
+            category.appendChild(option);
+          });
+        } catch (error) {}
+
+        async function runSearch() {
+          const q = form.query.value.trim();
+          const cat = category.value;
+          const query = new URLSearchParams();
+          if (q) query.set('search', q);
+          if (cat) query.set('category', cat);
+          const data = await window.Hallaym.request('/api/articles?' + query.toString());
+          results.innerHTML = data.items.length
+            ? data.items.map((item) => `
+                <article class="card article-card">
+                  <a href="/news/${escapeHtml(item.slug)}"><img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" /></a>
+                  <span class="kicker">${escapeHtml(item.categoryLabel)}</span>
+                  <h3><a href="/news/${escapeHtml(item.slug)}">${escapeHtml(item.title)}</a></h3>
+                  <p>${escapeHtml(item.excerpt)}</p>
+                  <div class="meta-row">
+                    <span>${escapeHtml(item.author ? item.author.name : 'Hallaym Team')}</span>
+                    <span>${window.Hallaym.formatDate(item.publishedAt)}</span>
+                  </div>
+                </article>
+              `).join('')
+            : '<div class="empty card">Natija topilmadi.</div>';
+          meta.textContent = data.items.length ? data.items.length + " ta natija topildi." : "Natija topilmadi.";
+        }
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          runSearch().catch((error) => window.Hallaym.toast(error.message));
+        });
+
+        renderSaved();
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('q')) {
+          form.query.value = params.get('q');
+          runSearch().catch(() => {});
+        }
+      });
+    </script>
+  </body>
+</html>

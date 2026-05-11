@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Kirish | Hallaym</title>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script>try{const theme=localStorage.getItem('hallaym:theme');if(theme){document.documentElement.dataset.theme=theme;}}catch(e){}</script>
+  </head>
+  <body>
+    <div data-dynamic-header></div>
+    <main class="site-shell main-flow">
+      <section class="feature-grid">
+        <div class="card">
+          <span class="kicker">Kirish</span>
+          <h1>Kabinetga kirish</h1>
+          <p>Boshqaruv yoki muallif xonasiga kirish uchun akkaunt ma’lumotlarini kiriting.</p>
+          <form id="login-form" class="form-grid" style="margin-top:18px">
+            <div class="full">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="admin@hallaym.com" required />
+            </div>
+            <div class="full">
+              <label for="password">Parol</label>
+              <input id="password" name="password" type="password" placeholder="Parol" required />
+            </div>
+            <div class="full">
+              <button class="btn btn-primary" type="submit">Kirish</button>
+            </div>
+          </form>
+        </div>
+        <div class="stack">
+          <div class="card">
+            <span class="kicker">Boshlang‘ich kirish</span>
+            <h3>Boshqaruvchi kirish ma’lumoti</h3>
+            <p><strong>Email:</strong> admin@hallaym.com</p>
+            <p><strong>Parol:</strong> Admin#2026</p>
+          </div>
+          <div class="card">
+            <h3>Mualliflar uchun</h3>
+            <p>Muallif akkauntlari ariza tasdiqlangandan keyin boshqaruv markazi orqali yaratiladi yoki muallif huquqiga o‘tkaziladi.</p>
+          </div>
+          <div class="card">
+            <h3>Yangi foydalanuvchi</h3>
+            <p>Agar faqat obuna va shaxsiy tavsiyalar kerak bo‘lsa, oddiy foydalanuvchi sifatida ro‘yxatdan o‘ting.</p>
+            <a class="btn" href="/register">Ro'yxatdan o'tish</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-dynamic-footer></div>
+    <script src="/assets/site.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('login-form');
+        form.addEventListener('submit', async function (event) {
+          event.preventDefault();
+          const payload = {
+            email: form.email.value.trim(),
+            password: form.password.value
+          };
+          try {
+            const data = await window.Hallaym.request('/api/auth/login', { method: 'POST', body: payload });
+            const role = data.user.role;
+            const next = new URLSearchParams(window.location.search).get('next');
+            const safeNext = next && next.startsWith('/') && !next.startsWith('//') ? next : '';
+            window.location.href = safeNext || (role === 'admin' ? '/admin' : role === 'author' ? '/writer' : '/');
+          } catch (error) {
+            window.Hallaym.toast(error.message);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

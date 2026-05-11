@@ -1,0 +1,43 @@
+MongoDB connection failed, demo fallback is active: MongoServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+    at Topology.selectServer (G:\news77\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async Topology._connect (G:\news77\node_modules\mongodb\lib\sdam\topology.js:220:28)
+    at async Topology.connect (G:\news77\node_modules\mongodb\lib\sdam\topology.js:171:13)
+    at async topologyConnect (G:\news77\node_modules\mongodb\lib\mongo_client.js:258:17)
+    at async MongoClient._connect (G:\news77\node_modules\mongodb\lib\mongo_client.js:271:13)
+    at async MongoClient.connect (G:\news77\node_modules\mongodb\lib\mongo_client.js:196:13)
+    at async initMongo (G:\news77\server.js:780:5)
+    at async start (G:\news77\server.js:3741:3) {
+  errorLabelSet: Set(0) {},
+  reason: TopologyDescription {
+    type: 'Unknown',
+    servers: Map(1) { '127.0.0.1:27017' => [ServerDescription] },
+    stale: false,
+    compatible: true,
+    heartbeatFrequencyMS: 10000,
+    localThresholdMS: 15,
+    setName: null,
+    maxElectionId: null,
+    maxSetVersion: null,
+    commonWireVersion: 0,
+    logicalSessionTimeoutMinutes: null
+  },
+  code: undefined,
+  [cause]: MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27017
+      at Socket.<anonymous> (G:\news77\node_modules\mongodb\lib\cmap\connect.js:314:44)
+      at Object.onceWrapper (node:events:633:26)
+      at Socket.emit (node:events:518:28)
+      at emitErrorNT (node:internal/streams/destroy:170:8)
+      at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errorLabelSet: Set(3) { 'SystemOverloadedError', 'RetryableError', 'ResetPool' },
+    beforeHandshake: false,
+    [cause]: Error: connect ECONNREFUSED 127.0.0.1:27017
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 27017
+    }
+  }
+}

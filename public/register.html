@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Ro'yxatdan o'tish | Hallaym</title>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script>try{const theme=localStorage.getItem('hallaym:theme');if(theme){document.documentElement.dataset.theme=theme;}}catch(e){}</script>
+  </head>
+  <body>
+    <div data-dynamic-header></div>
+    <main class="site-shell main-flow">
+      <section class="feature-grid">
+        <div class="card">
+          <span class="kicker">Ro‘yxatdan o‘tish</span>
+          <h1>Foydalanuvchi akkaunti ochish</h1>
+          <p>Ro'yxatdan o'tish ixtiyoriy. Akkaunt orqali obuna va kelajakda shaxsiylashtirilgan oqim ulanishi mumkin.</p>
+          <form id="register-form" class="form-grid" style="margin-top:18px">
+            <div class="full">
+              <label for="name">Ism</label>
+              <input id="name" name="name" type="text" placeholder="Ismingiz" required />
+            </div>
+            <div class="full">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div class="full">
+              <label for="password">Parol</label>
+              <input id="password" name="password" type="password" minlength="6" placeholder="Kamida 6 belgi" required />
+            </div>
+            <div class="full">
+              <label class="check-row" for="acceptLegal">
+                <input id="acceptLegal" name="acceptLegal" type="checkbox" required />
+                <span><a href="/privacy" target="_blank" rel="noreferrer">Maxfiylik siyosati</a> va <a href="/terms" target="_blank" rel="noreferrer">Foydalanish shartlari</a> shartlarini o‘qidim va roziman.</span>
+              </label>
+            </div>
+            <div class="full">
+              <button class="btn btn-primary" type="submit">Akkaunt yaratish</button>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <span class="kicker">Keyingi qadam</span>
+          <h3>Muallif bo'lishni xohlaysizmi?</h3>
+          <p>Avval akkaunt bilan kiring, keyin muallif arizasi sahifasi orqali murojaat yuboring.</p>
+          <a class="btn" href="/apply">Ariza sahifasiga o'tish</a>
+        </div>
+      </section>
+    </main>
+    <div data-dynamic-footer></div>
+    <script src="/assets/site.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('register-form');
+        form.addEventListener('submit', async function (event) {
+          event.preventDefault();
+          try {
+            await window.Hallaym.request('/api/auth/register', {
+              method: 'POST',
+              body: {
+                name: form.name.value.trim(),
+                email: form.email.value.trim(),
+                password: form.password.value,
+                acceptLegal: form.acceptLegal.checked
+              }
+            });
+            window.Hallaym.toast("Akkaunt yaratildi.");
+            window.location.href = '/';
+          } catch (error) {
+            window.Hallaym.toast(error.message);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

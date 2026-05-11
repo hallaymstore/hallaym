@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Boshqaruv markazi | Hallaym</title>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script>try{const theme=localStorage.getItem('hallaym:theme');if(theme){document.documentElement.dataset.theme=theme;}}catch(e){}</script>
+  </head>
+  <body>
+    <div data-dynamic-header></div>
+    <main class="site-shell main-flow">
+      <section class="page-intro">
+        <span class="eyebrow">Boshqaruv markazi</span>
+        <h1>Premium nashr boshqaruvi</h1>
+        <p>Kontent, brend ko‘rinishi, muallif arizalari va nashr sifati bir joyda boshqariladi.</p>
+      </section>
+
+      <div id="runtime-status" class="notice">Yuklanmoqda...</div>
+
+      <section class="section">
+        <div class="stats-grid" id="stats-grid"></div>
+      </section>
+
+      <section class="section">
+        <div class="feature-grid">
+          <div class="card">
+            <span class="kicker">Tezkor amallar</span>
+            <h3>Tezkor boshqaruv</h3>
+            <div class="stack">
+              <button class="btn btn-primary" type="button" id="refresh-dashboard">Ma’lumotlarni yangilash</button>
+              <button class="btn" type="button" id="send-indexnow">Qidiruvga xabar berish</button>
+              <a class="btn" href="/rss.xml" target="_blank" rel="noreferrer">Yangiliklar oqimi</a>
+              <a class="btn" href="/news-sitemap.xml" target="_blank" rel="noreferrer">Nashr xaritasi</a>
+            </div>
+          </div>
+          <div class="card">
+            <span class="kicker">Tavsiya</span>
+            <h3>Qidiruvdagi ko‘rinish</h3>
+            <p>Bu bo‘lim materiallarning qidiruv va yangilik platformalarida chiroyli ko‘rinishga tayyorligini ko‘rsatadi. Yakuniy chiqish tashqi platformalar tasdig‘iga bog‘liq.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="feature-grid">
+          <div class="card">
+            <span class="kicker">Brend ko‘rinishi</span>
+            <h3>Logo va rasmiy bloklar</h3>
+            <form id="settings-form" class="form-grid">
+              <div>
+                <label for="siteName">Sayt nomi</label>
+                <input id="siteName" name="siteName" type="text" />
+              </div>
+              <div>
+                <label for="shortName">Qisqa nom</label>
+                <input id="shortName" name="shortName" type="text" />
+              </div>
+              <div>
+                <label for="accent">Urg‘u matni</label>
+                <input id="accent" name="accent" type="text" />
+              </div>
+              <div>
+                <label for="ownerName">Egasi</label>
+                <input id="ownerName" name="ownerName" type="text" />
+              </div>
+              <div class="full">
+                <label for="logoUrl">Logo havolasi</label>
+                <input id="logoUrl" name="logoUrl" type="url" placeholder="Logoning xavfsiz havolasi" />
+                <input id="logoPublicId" name="logoPublicId" type="hidden" />
+              </div>
+              <div>
+                <label for="logoFile">Logo yuklash</label>
+                <input id="logoFile" type="file" accept="image/*" />
+              </div>
+              <div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap">
+                <button class="btn" type="button" id="upload-logo">Logo yuklash</button>
+                <img id="logo-preview" class="logo-preview" src="/media/logo.svg" alt="Logo ko‘rinishi" />
+              </div>
+              <div class="full">
+                <label for="tagline">Shior</label>
+                <input id="tagline" name="tagline" type="text" />
+              </div>
+              <div class="full">
+                <label for="announcement">E’lon matni</label>
+                <textarea id="announcement" name="announcement"></textarea>
+              </div>
+              <div class="full">
+                <label for="heroTitle">Asosiy sarlavha</label>
+                <input id="heroTitle" name="heroTitle" type="text" />
+              </div>
+              <div class="full">
+                <label for="heroDescription">Asosiy tavsif</label>
+                <textarea id="heroDescription" name="heroDescription"></textarea>
+              </div>
+              <div>
+                <label for="newsroomEmail">Tahririyat emaili</label>
+                <input id="newsroomEmail" name="newsroomEmail" type="email" />
+              </div>
+              <div>
+                <label for="phone">Telefon</label>
+                <input id="phone" name="phone" type="text" />
+              </div>
+              <div class="full">
+                <label for="address">Manzil</label>
+                <input id="address" name="address" type="text" />
+              </div>
+              <div class="full">
+                <label for="footerAbout">Pastki izoh</label>
+                <textarea id="footerAbout" name="footerAbout"></textarea>
+              </div>
+              <div>
+                <label for="telegram">Telegram</label>
+                <input id="telegram" name="telegram" type="url" />
+              </div>
+              <div>
+                <label for="youtube">YouTube</label>
+                <input id="youtube" name="youtube" type="url" />
+              </div>
+              <div>
+                <label for="instagram">Instagram</label>
+                <input id="instagram" name="instagram" type="url" />
+              </div>
+              <div>
+                <label for="x">X / Twitter</label>
+                <input id="x" name="x" type="url" />
+              </div>
+              <div class="full">
+                <button class="btn btn-primary" type="submit">Sozlamalarni saqlash</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <span class="kicker">Nashr tayyorlash</span>
+            <h3>Material yaratish yoki tahrirlash</h3>
+            <form id="article-form" class="form-grid">
+              <input id="articleId" name="articleId" type="hidden" />
+              <input id="imagePublicId" name="imagePublicId" type="hidden" />
+              <div class="full">
+                <label for="title">Sarlavha</label>
+                <input id="title" name="title" type="text" />
+              </div>
+              <div>
+                <label for="kicker">Ustki belgi</label>
+                <input id="kicker" name="kicker" type="text" />
+              </div>
+              <div>
+                <label for="categorySlug">Kategoriya</label>
+                <select id="categorySlug" name="categorySlug"></select>
+              </div>
+              <div class="full">
+                <label for="excerpt">Qisqa tavsif</label>
+                <textarea id="excerpt" name="excerpt"></textarea>
+              </div>
+              <div class="full">
+                <label for="tags">Kalit so‘zlar</label>
+                <input id="tags" name="tags" type="text" placeholder="yangiliklar, biznes, jamiyat" />
+              </div>
+              <div class="full">
+                <label for="seoTitle">Qidiruv sarlavhasi</label>
+                <input id="seoTitle" name="seoTitle" type="text" />
+              </div>
+              <div class="full">
+                <label for="seoDescription">Qidiruv tavsifi</label>
+                <textarea id="seoDescription" name="seoDescription"></textarea>
+              </div>
+              <div class="full">
+                <label for="imageUrl">Muqova rasmi havolasi</label>
+                <input id="imageUrl" name="imageUrl" type="url" placeholder="Rasmning xavfsiz havolasi" />
+              </div>
+              <div>
+                <label for="coverFile">Rasm yuklash</label>
+                <input id="coverFile" name="coverFile" type="file" accept="image/*" />
+              </div>
+              <div style="display:flex;align-items:end">
+                <button class="btn" type="button" id="upload-cover">Rasm yuklash</button>
+              </div>
+              <div class="full">
+                <label for="sourceLinks">Link va manbalar</label>
+                <textarea id="sourceLinks" name="sourceLinks" rows="3" placeholder="Masalan: Rasmiy xabar | https://example.com/news"></textarea>
+                <span class="input-hint">Har qatorda bitta havola. Format: nom | havola | izoh.</span>
+                <div id="link-preview" class="preview-panel"></div>
+              </div>
+              <div class="full">
+                <label for="mediaImages">Qo‘shimcha rasmlar</label>
+                <textarea id="mediaImages" name="mediaImages" rows="3" placeholder="Rasm nomi | https://example.com/photo.jpg | qisqa izoh"></textarea>
+              </div>
+              <div class="full">
+                <label for="videoLinks">Video havolalar</label>
+                <textarea id="videoLinks" name="videoLinks" rows="3" placeholder="Video nomi | https://youtube.com/watch?v=..."></textarea>
+              </div>
+              <div>
+                <label for="mediaFile">Rasm/video qo‘shish</label>
+                <input id="mediaFile" type="file" accept="image/*,video/*" />
+              </div>
+              <div style="display:flex;align-items:end">
+                <button class="btn" type="button" id="upload-media">Media qo‘shish</button>
+              </div>
+              <div class="full">
+                <label for="externalPosts">Ijtimoiy postlar</label>
+                <textarea id="externalPosts" name="externalPosts" rows="4" placeholder="Telegram, Instagram, Likee yoki Facebook post havolasi"></textarea>
+                <span class="input-hint">Telegram, Instagram, Facebook, Likee, YouTube va boshqa havolalar preview sifatida chiqadi.</span>
+                <div id="social-preview" class="preview-panel"></div>
+              </div>
+              <div class="full">
+                <label for="content">Kontent</label>
+                <textarea id="content" name="content" style="min-height:220px"></textarea>
+              </div>
+              <div>
+                <label for="status">Holat</label>
+                <select id="status" name="status">
+                  <option value="draft">Qoralama</option>
+                  <option value="pending_review">Ko‘rib chiqishda</option>
+                  <option value="published">E’lon qilingan</option>
+                </select>
+              </div>
+              <div style="display:flex;align-items:end">
+                <button class="btn btn-primary" type="submit">Postni saqlash</button>
+                <button class="btn" type="button" id="reset-article-form">Yangi material</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Materiallar</h2>
+            <p class="muted">Tahrirlash yoki o'chirish uchun materialni tanlang.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Sarlavha</th>
+                <th>Muallif</th>
+                <th>Holat</th>
+                <th>Ko'rish</th>
+                <th>Yangilangan</th>
+                <th>Amal</th>
+              </tr>
+            </thead>
+            <tbody id="articles-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Tarqatish tayyorgarligi</h2>
+            <p class="muted" id="feed-note"></p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Material</th>
+                <th>Google</th>
+                <th>Bing</th>
+                <th>Yahoo</th>
+                <th>Aggregator</th>
+              </tr>
+            </thead>
+            <tbody id="feed-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Muallif arizalari</h2>
+            <p class="muted">Kutilayotgan arizalarni muallif sifatida tasdiqlash mumkin.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ism</th>
+                <th>Email</th>
+                <th>Yo'nalish</th>
+                <th>Holat</th>
+                <th>Amal</th>
+              </tr>
+            </thead>
+            <tbody id="applications-table"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <div data-dynamic-footer></div>
+    <script src="/assets/site.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const state = { articles: [], config: null };
+        const statsGrid = document.getElementById('stats-grid');
+        const runtimeHolat = document.getElementById('runtime-status');
+        const articlesTable = document.getElementById('articles-table');
+        const feedTable = document.getElementById('feed-table');
+        const applicationsTable = document.getElementById('applications-table');
+        const feedNote = document.getElementById('feed-note');
+        const settingsForm = document.getElementById('settings-form');
+        const articleForm = document.getElementById('article-form');
+        const categorySelect = document.getElementById('categorySlug');
+
+        function escapeHtml(value) {
+          return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        }
+
+        function slugify(value) {
+          return String(value || '')
+            .toLowerCase()
+            .normalize('NFKD')
+            .replace(/['"]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .replace(/-{2,}/g, '-');
+        }
+
+        function badge(status) {
+          const map = {
+            eligible: '<span class="chip tone-success">Tayyor</span>',
+            review: '<span class="chip tone-warning">Ko\'rib chiqish</span>',
+            'needs-work': '<span class="chip tone-danger">Ish talab qiladi</span>'
+          };
+          return map[status] || '<span class="chip">Noma\'lum</span>';
+        }
+
+
+        function statusBadge(status) {
+          const map = {
+            published: ['E’lon qilingan', 'success'],
+            pending_review: ['Boshqaruv tasdig‘ida', 'warning'],
+            draft: ['Qoralama', 'neutral']
+          };
+          const item = map[status] || [status || "Noma'lum", 'neutral'];
+          return '<span class="status-pill tone-' + item[1] + '">' + escapeHtml(item[0]) + '</span>';
+        }
+
+        async function ensureAdmin() {
+          try {
+            const session = await window.Hallaym.request('/api/session');
+            if (!session.user || session.user.role !== 'admin') {
+              window.location.replace('/login?next=/admin');
+              return false;
+            }
+            return true;
+          } catch (error) {
+            runtimeHolat.textContent = 'Kirish holatini tekshirishda xatolik: ' + error.message;
+            window.Hallaym.toast(error.message);
+            window.location.replace('/login?next=/admin');
+            return false;
+          }
+        }
+
+        async function uploadCover(file, publicTitle, resourceType) {
+          const config = await window.Hallaym.request('/api/media/config');
+          if (!config.enabled) {
+            throw new Error('Media yuklash xizmati sozlanmagan. Hozircha xavfsiz havoladan foydalaning.');
+          }
+          const publicId = slugify(publicTitle || file.name) + '-' + Date.now();
+          const type = resourceType || (file.type && file.type.startsWith('video/') ? 'video' : 'image');
+          const formData = new FormData();
+          formData.append('file', file);
+          const endpoint = 'https://api.cloudinary.com/v1_1/' + config.cloudName + '/' + type + '/upload';
+
+          if (config.signed) {
+            const sign = await window.Hallaym.request('/api/media/sign-upload', {
+              method: 'POST',
+              body: { publicId }
+            });
+            formData.append('api_key', sign.apiKey);
+            formData.append('timestamp', String(sign.timestamp));
+            formData.append('signature', sign.signature);
+            formData.append('folder', sign.folder);
+            formData.append('public_id', sign.publicId);
+          } else if (config.unsigned && config.uploadPreset) {
+            formData.append('upload_preset', config.uploadPreset);
+            formData.append('folder', config.folder);
+            formData.append('public_id', publicId);
+          } else {
+            throw new Error('Media yuklash sozlamalari to‘liq emas.');
+          }
+
+          const response = await fetch(endpoint, { method: 'POST', body: formData });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            throw new Error(data.error && data.error.message ? data.error.message : 'Media yuklashda xatolik yuz berdi.');
+          }
+          return data;
+        }
+
+        function splitLine(line) {
+          return String(line || '').split('|').map((part) => part.trim()).filter(Boolean);
+        }
+
+        function detectPlatform(url) {
+          const lower = String(url || '').toLowerCase();
+          if (lower.includes('t.me') || lower.includes('telegram')) return 'Telegram';
+          if (lower.includes('instagram')) return 'Instagram';
+          if (lower.includes('facebook') || lower.includes('fb.watch')) return 'Facebook';
+          if (lower.includes('likee')) return 'Likee';
+          if (lower.includes('youtube') || lower.includes('youtu.be')) return 'YouTube';
+          if (lower.includes('tiktok')) return 'TikTok';
+          return 'Havola';
+        }
+
+        function renderPreview(text, node, mode) {
+          const lines = String(text || '').split(/\r?\n/).map((line) => line.trim()).filter(Boolean).slice(0, 8);
+          node.innerHTML = lines.map((line) => {
+            const parts = splitLine(line);
+            const url = parts.find((part) => /^https?:\/\//i.test(part)) || parts[0] || '';
+            const title = parts[0] === url ? detectPlatform(url) : parts[0];
+            const label = mode === 'social' ? detectPlatform(url) : title;
+            return '<div class="preview-card"><strong>' + escapeHtml(label) + '</strong><small>' + escapeHtml(url) + '</small></div>';
+          }).join('');
+        }
+
+        function wirePreviews() {
+          const linkNode = document.getElementById('link-preview');
+          const socialNode = document.getElementById('social-preview');
+          const update = () => {
+            renderPreview(articleForm.sourceLinks.value, linkNode, 'link');
+            renderPreview(articleForm.externalPosts.value, socialNode, 'social');
+          };
+          ['sourceLinks', 'externalPosts'].forEach((name) => {
+            articleForm[name].addEventListener('input', update);
+          });
+          update();
+        }
+
+        function fillSettings(config) {
+          const brand = config.brand || {};
+          Object.keys(brand).forEach((key) => {
+            if (settingsForm.elements[key]) {
+              settingsForm.elements[key].value = brand[key] || '';
+            }
+          });
+          const preview = document.getElementById('logo-preview');
+          if (preview) {
+            preview.src = brand.logoUrl || '/media/logo.svg';
+          }
+        }
+
+        function resetArticleForm() {
+          articleForm.reset();
+          articleForm.articleId.value = '';
+          articleForm.imagePublicId.value = '';
+          articleForm.sourceLinks.value = '';
+          articleForm.mediaImages.value = '';
+          articleForm.videoLinks.value = '';
+          articleForm.externalPosts.value = '';
+          renderPreview('', document.getElementById('link-preview'), 'link');
+          renderPreview('', document.getElementById('social-preview'), 'social');
+          articleForm.status.value = 'draft';
+          if (categorySelect.options.length) {
+            categorySelect.value = categorySelect.options[0].value;
+          }
+          articleForm.title.focus();
+        }
+
+        function fillArticle(article) {
+          articleForm.articleId.value = article.id;
+          articleForm.imagePublicId.value = article.imagePublicId || '';
+          articleForm.title.value = article.title || '';
+          articleForm.kicker.value = article.kicker || '';
+          articleForm.categorySlug.value = article.categorySlug || 'technology';
+          articleForm.excerpt.value = article.excerpt || '';
+          articleForm.tags.value = (article.tags || []).join(', ');
+          articleForm.seoTitle.value = article.seoTitle || '';
+          articleForm.seoDescription.value = article.seoDescription || '';
+          articleForm.imageUrl.value = article.imageUrl || '';
+          articleForm.sourceLinks.value = article.sourceLinksText || '';
+          articleForm.mediaImages.value = article.mediaImagesText || '';
+          articleForm.videoLinks.value = article.videoLinksText || '';
+          articleForm.externalPosts.value = article.externalPostsText || '';
+          articleForm.content.value = article.content || '';
+          articleForm.status.value = article.status || 'draft';
+          renderPreview(articleForm.sourceLinks.value, document.getElementById('link-preview'), 'link');
+          renderPreview(articleForm.externalPosts.value, document.getElementById('social-preview'), 'social');
+        }
+
+        function renderStats(stats, storage) {
+          const metricItems = [
+            ['Jami kirishlar', stats.totalVisits],
+            ['Userlar', stats.totalUsers],
+            ['Mualliflar', stats.totalAuthors],
+            ['E’lon qilingan materiallar', stats.publishedArticles],
+            ['Tasdiq kutmoqda', stats.pendingReviewArticles || 0]
+          ];
+          statsGrid.innerHTML = metricItems.map((entry) => `
+            <div class="metric">
+              <strong>${escapeHtml(entry[1])}</strong>
+              <span>${escapeHtml(entry[0])}</span>
+            </div>
+          `).join('');
+
+          const mongo = storage.mongodb || {};
+          const cloudinary = storage.cloudinary || {};
+          runtimeHolat.innerHTML =
+            '<strong>Kontent bazasi:</strong> ' + (mongo.connected ? 'tayyor' : (mongo.enabled ? 'zaxira rejimida' : 'sozlanmagan')) +
+            ' | <strong>Rasm xizmati:</strong> ' + (cloudinary.enabled ? 'tayyor' : 'havola orqali') +
+            (mongo.error ? ' | <strong>Ogohlantirish:</strong> ' + escapeHtml(mongo.error) : '');
+        }
+
+        function renderArticles(items) {
+          state.articles = items;
+          if (!items.length) {
+            articlesTable.innerHTML = '<tr><td colspan="6" class="empty">Hali post yo\'q. Yuqoridagi forma orqali yangi post yarating.</td></tr>';
+            return;
+          }
+          articlesTable.innerHTML = items.map((article) => `
+            <tr>
+              <td>
+                <strong>${escapeHtml(article.title)}</strong>
+                <div class="small">${escapeHtml(article.categoryLabel)}</div>
+              </td>
+              <td>${escapeHtml(article.author ? article.author.name : 'Hallaym Team')}</td>
+              <td>${statusBadge(article.status)}</td>
+              <td>${escapeHtml(article.views)}</td>
+              <td>${escapeHtml(window.Hallaym.formatDate(article.updatedAt))}</td>
+              <td>
+                <div class="stack">
+                  ${article.status === 'pending_review' ? '<button class="btn btn-primary" type="button" data-publish="' + escapeHtml(article.id) + '">Tasdiqlash</button>' : ''}
+                  <button class="btn" type="button" data-edit="${escapeHtml(article.id)}">Tahrirlash</button>
+                  <button class="btn btn-danger" type="button" data-delete="${escapeHtml(article.id)}">O‘chirish</button>
+                </div>
+              </td>
+            </tr>
+          `).join('');
+
+          articlesTable.querySelectorAll('[data-edit]').forEach((button) => {
+            button.onclick = function () {
+              const article = state.articles.find((item) => item.id === button.dataset.edit);
+              if (article) {
+                fillArticle(article);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            };
+          });
+
+          articlesTable.querySelectorAll('[data-publish]').forEach((button) => {
+            button.onclick = async function () {
+              const article = state.articles.find((item) => item.id === button.dataset.publish);
+              if (!article) return;
+              try {
+                await window.Hallaym.request('/api/admin/articles/' + encodeURIComponent(button.dataset.publish), {
+                  method: 'PUT',
+                  body: { ...article, content: article.content || '', status: 'published' }
+                });
+                await loadDashboard();
+                window.Hallaym.toast('Material tasdiqlandi va e’lon qilindi.');
+              } catch (error) {
+                window.Hallaym.toast(error.message);
+              }
+            };
+          });
+
+          articlesTable.querySelectorAll('[data-delete]').forEach((button) => {
+            button.onclick = async function () {
+              if (!window.confirm('Postni o\'chirishni tasdiqlaysizmi?')) return;
+              try {
+                await window.Hallaym.request('/api/admin/articles/' + encodeURIComponent(button.dataset.delete), { method: 'DELETE' });
+                resetArticleForm();
+                await loadDashboard();
+                window.Hallaym.toast('Post o\'chirildi.');
+              } catch (error) {
+                window.Hallaym.toast(error.message);
+              }
+            };
+          });
+        }
+
+        function renderFeed(payload) {
+          feedNote.textContent = payload.note || '';
+          const items = payload.items || [];
+          if (!items.length) {
+            feedTable.innerHTML = '<tr><td colspan="5" class="empty">Tarqatish tayyorgarligi uchun materiallar mavjud emas.</td></tr>';
+            return;
+          }
+          feedTable.innerHTML = items.map((row) => `
+            <tr>
+              <td><a href="/news/${escapeHtml(row.article.slug)}" target="_blank" rel="noreferrer">${escapeHtml(row.article.title)}</a></td>
+              <td>${badge(row.readiness.google.status)}</td>
+              <td>${badge(row.readiness.bing.status)}</td>
+              <td>${badge(row.readiness.yahoo.status)}</td>
+              <td>${badge(row.readiness.opera.status)}</td>
+            </tr>
+          `).join('');
+        }
+
+        function renderApplications(items) {
+          if (!items.length) {
+            applicationsTable.innerHTML = '<tr><td colspan="5" class="empty">Hozircha muallif arizalari yo\'q.</td></tr>';
+            return;
+          }
+          applicationsTable.innerHTML = items.map((item) => `
+            <tr>
+              <td>${escapeHtml(item.name)}</td>
+              <td>${escapeHtml(item.email)}</td>
+              <td>${escapeHtml(item.expertise)}</td>
+              <td>${escapeHtml(item.status)}</td>
+              <td>
+                ${item.status === 'pending' ? '<button class="btn" type="button" data-approve="' + escapeHtml(item.id) + '">Tasdiqlash</button>' : '<span class="small">Tasdiqlangan</span>'}
+              </td>
+            </tr>
+          `).join('');
+          applicationsTable.querySelectorAll('[data-approve]').forEach((button) => {
+            button.onclick = async function () {
+              try {
+                await window.Hallaym.request('/api/admin/applications/' + encodeURIComponent(button.dataset.approve) + '/approve', { method: 'POST' });
+                window.Hallaym.toast('Muallif tasdiq qilindi. Boshlang‘ich parol: Author#2026');
+                await loadDashboard();
+              } catch (error) {
+                window.Hallaym.toast(error.message);
+              }
+            };
+          });
+        }
+
+        async function loadDashboard() {
+          runtimeHolat.textContent = 'Boshqaruv markazi yuklanmoqda...';
+          try {
+            const [config, statsPayload, articlesPayload, feedPayload, applicationsPayload] = await Promise.all([
+              window.Hallaym.request('/api/config'),
+              window.Hallaym.request('/api/admin/stats'),
+              window.Hallaym.request('/api/admin/articles'),
+              window.Hallaym.request('/api/admin/feed-health'),
+              window.Hallaym.request('/api/admin/applications')
+            ]);
+            state.config = config;
+            categorySelect.innerHTML = config.categories.map((item) => '<option value="' + escapeHtml(item.slug) + '">' + escapeHtml(item.label) + '</option>').join('');
+            renderStats(statsPayload.stats, config.storage || {});
+            fillSettings(config);
+            renderArticles(articlesPayload.items || []);
+            renderFeed(feedPayload || { items: [] });
+            renderApplications(applicationsPayload.items || []);
+          } catch (error) {
+            runtimeHolat.textContent = 'Boshqaruv markazi yuklanmadi: ' + error.message;
+            window.Hallaym.toast(error.message);
+            if (/kirishingiz|ruxsat|403|401/i.test(error.message)) {
+              window.location.replace('/login?next=/admin');
+            }
+          }
+        }
+
+        function articlePayload() {
+          return {
+            title: articleForm.title.value.trim(),
+            kicker: articleForm.kicker.value.trim(),
+            categorySlug: articleForm.categorySlug.value,
+            excerpt: articleForm.excerpt.value.trim(),
+            tags: articleForm.tags.value.trim(),
+            seoTitle: articleForm.seoTitle.value.trim(),
+            seoDescription: articleForm.seoDescription.value.trim(),
+            imageUrl: articleForm.imageUrl.value.trim(),
+            imagePublicId: articleForm.imagePublicId.value.trim(),
+            sourceLinks: articleForm.sourceLinks.value.trim(),
+            mediaImages: articleForm.mediaImages.value.trim(),
+            videoLinks: articleForm.videoLinks.value.trim(),
+            externalPosts: articleForm.externalPosts.value.trim(),
+            content: articleForm.content.value,
+            status: articleForm.status.value
+          };
+        }
+
+        document.getElementById('refresh-dashboard').onclick = function () {
+          loadDashboard();
+        };
+
+        document.getElementById('send-indexnow').onclick = async function () {
+          try {
+            const result = await window.Hallaym.request('/api/admin/indexnow', { method: 'POST' });
+            window.Hallaym.toast('Qidiruv platformalariga xabar yuborildi. Javob kodi: ' + result.submission.status);
+          } catch (error) {
+            window.Hallaym.toast(error.message);
+          }
+        };
+
+        settingsForm.addEventListener('submit', async function (event) {
+          event.preventDefault();
+          const formData = Object.fromEntries(new FormData(settingsForm).entries());
+          try {
+            await window.Hallaym.request('/api/admin/settings', { method: 'PUT', body: formData });
+            window.Hallaym.toast('Sozlamalar saqlandi.');
+            await window.Hallaym.hydrateChrome();
+            await loadDashboard();
+          } catch (error) {
+            window.Hallaym.toast(error.message);
+          }
+        });
+
+        document.getElementById('upload-logo').onclick = async function () {
+          const file = document.getElementById('logoFile').files[0];
+          if (!file) {
+            window.Hallaym.toast('Avval logo rasmini tanlang.');
+            return;
+          }
+          try {
+            const uploaded = await uploadCover(file, (settingsForm.siteName.value || 'hallaym') + '-logo');
+            settingsForm.logoUrl.value = uploaded.secure_url;
+            settingsForm.logoPublicId.value = uploaded.public_id || '';
+            document.getElementById('logo-preview').src = uploaded.secure_url;
+            window.Hallaym.toast('Logo yuklandi. Saqlash uchun sozlamalarni saqlang.');
+          } catch (error) {
+            window.Hallaym.toast(error.message);
+          }
+        };
+
+        document.getElementById('upload-cover').onclick = async function () {
+          const file = articleForm.coverFile.files[0];
+          if (!file) {
+            window.Hallaym.toast('Avval rasm tanlang.');
+            return;
+          }
+          try {
+            const uploaded = await uploadCover(file, articleForm.title.value);
+            articleForm.imageUrl.value = uploaded.secure_url;
+            articleForm.imagePublicId.value = uploaded.public_id || '';
+            window.Hallaym.toast('Muqova rasmi yuklandi.');
+          } catch (error) {
+            window.Hallaym.toast(error.message);
+          }
+        };
+
+        document.getElementById('upload-media').onclick = async function () {
+          const file = document.getElementById('mediaFile').files[0];
+          if (!file) {
+            window.Hallaym.toast('Avval rasm yoki video tanlang.');
+            return;
+          }
+          try {
+            const type = file.type && file.type.startsWith('video/') ? 'video' : 'image';
+            const uploaded = await uploadCover(file, articleForm.title.value || file.name, type);
+            const target = type === 'video' ? articleForm.videoLinks : articleForm.mediaImages;
+            target.value = (target.value ? target.value + '\n' : '') + (uploaded.secure_url || '');
+            window.Hallaym.toast(type === 'video' ? 'Video qo‘shildi.' : 'Rasm qo‘shildi.');
+          } catch (error) {
+            window.Hallaym.toast(error.message);
+          }
+        };
+
+        wirePreviews();
+
+        const resetButton = document.getElementById('reset-article-form');
+        if (resetButton) {
+          resetButton.onclick = resetArticleForm;
+        }
+
+        articleForm.addEventListener('submit', async function (event) {
+          event.preventDefault();
+          const payload = articlePayload();
+          if (!payload.title || !payload.excerpt) {
+            window.Hallaym.toast('Sarlavha va qisqa tavsif majburiy.');
+            return;
+          }
+          try {
+            if (articleForm.articleId.value) {
+              await window.Hallaym.request('/api/admin/articles/' + encodeURIComponent(articleForm.articleId.value), {
+                method: 'PUT',
+                body: payload
+              });
+              window.Hallaym.toast('Material yangilandi.');
+            } else {
+              await window.Hallaym.request('/api/writer/articles', { method: 'POST', body: payload });
+              window.Hallaym.toast('Yangi material yaratildi.');
+            }
+            resetArticleForm();
+            await loadDashboard();
+          } catch (error) {
+            window.Hallaym.toast(error.message);
+          }
+        });
+
+        ensureAdmin().then((ok) => {
+          if (ok) {
+            loadDashboard();
+          }
+        });
+      });
+    </script>
+
+  </body>
+</html>

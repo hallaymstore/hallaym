@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Muallif arizasi | Hallaym</title>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script>try{const theme=localStorage.getItem('hallaym:theme');if(theme){document.documentElement.dataset.theme=theme;}}catch(e){}</script>
+  </head>
+  <body>
+    <div data-dynamic-header></div>
+    <main class="site-shell main-flow">
+      <section class="feature-grid">
+        <div class="card">
+          <span class="kicker">Muallif arizasi</span>
+          <h1>Muallif bo'lish uchun ariza</h1>
+          <p>Arizangiz tasdiqlangach, muallif xonasida material tayyorlab, rasm qo‘shib, qisqa tavsiflarni boshqarishingiz mumkin.</p>
+          <form id="apply-form" class="form-grid" style="margin-top:18px">
+            <div>
+              <label for="name">Ism</label>
+              <input id="name" name="name" type="text" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+            <div class="full">
+              <label for="expertise">Yo'nalish</label>
+              <input id="expertise" name="expertise" type="text" placeholder="Masalan: texnologiya, sport, iqtisod..." required />
+            </div>
+            <div class="full">
+              <label for="pitch">Taklif</label>
+              <textarea id="pitch" name="pitch" placeholder="Nima yozmoqchisiz, qanday formatda va nega aynan siz?" required></textarea>
+            </div>
+            <div class="full">
+              <label class="check-row" for="acceptLegal">
+                <input id="acceptLegal" name="acceptLegal" type="checkbox" required />
+                <span><a href="/privacy" target="_blank" rel="noreferrer">Maxfiylik siyosati</a> va <a href="/terms" target="_blank" rel="noreferrer">Foydalanish shartlari</a> shartlarini o‘qidim, muallif materiallari boshqaruv tasdig‘idan o‘tishiga roziman.</span>
+              </label>
+            </div>
+            <div class="full">
+              <button class="btn btn-primary" type="submit">Arizani yuborish</button>
+            </div>
+          </form>
+        </div>
+        <div class="stack">
+          <div class="card">
+            <span class="kicker">Jarayon</span>
+            <p>Ariza boshqaruv markaziga tushadi, tekshiruvdan o‘tgach muallif huquqi beriladi.</p>
+          </div>
+          <div class="card">
+            <p>Tasdiqlangach, boshqaruvchi muallif akkauntini tayyorlaydi yoki mavjud foydalanuvchiga muallif huquqini beradi.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-dynamic-footer></div>
+    <script src="/assets/site.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('apply-form');
+        form.addEventListener('submit', async function (event) {
+          event.preventDefault();
+          try {
+            await window.Hallaym.request('/api/author-applications', {
+              method: 'POST',
+              body: {
+                name: form.name.value.trim(),
+                email: form.email.value.trim(),
+                expertise: form.expertise.value.trim(),
+                pitch: form.pitch.value.trim(),
+                acceptLegal: form.acceptLegal.checked
+              }
+            });
+            window.Hallaym.toast("Ariza qabul qilindi.");
+            form.reset();
+          } catch (error) {
+            window.Hallaym.toast(error.message);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
